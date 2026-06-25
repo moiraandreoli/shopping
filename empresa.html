@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIMS – Editar Empresa</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; font-size: 13px; background: #f0f0f0; color: #333; }
+  .topnav { background: #1a2b3c; height: 40px; display: flex; align-items: center; padding: 0 12px; }
+  .brand { color: white; font-weight: bold; font-size: 13px; padding-right: 20px; }
+  .brand span { color: #4db6e8; }
+  .nav-items { display: flex; flex: 1; overflow: hidden; }
+  .nav-item { color: #ccc; font-size: 12px; padding: 0 10px; height: 40px; display: flex; align-items: center; cursor: pointer; white-space: nowrap; }
+  .nav-item:hover { background: #2a3d52; color: white; }
+  .secondary-bar { background: white; border-bottom: 1px solid #ddd; height: 36px; display: flex; align-items: center; padding: 0 12px; gap: 8px; }
+  .icon-btn { width: 24px; height: 24px; border: 1px solid #ccc; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #666; }
+  .breadcrumb { font-size: 12px; color: #666; }
+  .breadcrumb strong { color: #1a2b3c; }
+  .layout { display: flex; min-height: calc(100vh - 76px); }
+  .sidebar { width: 160px; background: white; border-right: 1px solid #ddd; padding: 16px 0; flex-shrink: 0; }
+  .sidebar a { display: block; padding: 6px 16px; font-size: 12px; color: #444; text-decoration: none; }
+  .sidebar a:hover { background: #f5f5f5; }
+  .sidebar a.active { color: #1a7bbf; font-weight: 600; }
+  .sidebar a.danger { color: #c0392b; margin-top: 12px; }
+  .main { flex: 1; padding: 20px; }
+  .page-title { font-size: 18px; font-weight: 400; margin-bottom: 16px; }
+  .content-grid { display: grid; grid-template-columns: 390px 1fr; gap: 16px; align-items: start; }
+
+  /* ACCORDION */
+  .accordion { background: white; border: 1px solid #ddd; border-radius: 2px; }
+  .acc-item { border-bottom: 1px solid #eee; }
+  .acc-item:last-child { border-bottom: none; }
+  .acc-header { padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+  .acc-header:hover { background: #fafafa; }
+  .acc-header.active { background: #f0f7ff; }
+  .acc-title { font-size: 13px; color: #1a7bbf; font-weight: 500; }
+  .acc-sub { font-size: 11px; color: #888; margin-top: 1px; }
+
+  /* PANEL */
+  .panel { background: white; border: 1px solid #ddd; border-radius: 2px; padding: 20px; }
+  .panel-title { font-size: 13px; font-weight: 600; color: #333; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
+  .panel-sub { font-size: 11px; color: #888; margin-bottom: 16px; margin-top: -10px; }
+  .heritage { background: white; border: 1px solid #e0e0e0; border-radius: 3px; padding: 8px 12px; margin-bottom: 16px; font-size: 11px; color: #666; display: flex; align-items: center; gap: 6px; }
+  .heritage-dot { width: 6px; height: 6px; border-radius: 50%; background: #1a7bbf; flex-shrink: 0; }
+
+  /* SHOPPING CARDS */
+  .shop-card { border: 1px solid #e5e5e5; border-radius: 3px; margin-bottom: 8px; overflow: hidden; transition: border-color 0.15s; }
+  .shop-card.on { border-color: #90caf9; }
+  .shop-toggle { display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #f9f9f9; cursor: pointer; user-select: none; transition: background 0.15s; }
+  .shop-toggle:hover { background: #f0f0f0; }
+  .shop-card.on .shop-toggle { background: #eaf4fb; }
+  .shop-toggle input[type=checkbox] { width: 14px; height: 14px; cursor: pointer; accent-color: #1a7bbf; flex-shrink: 0; }
+  .shop-toggle label { font-size: 12px; color: #333; cursor: pointer; flex: 1; }
+  .badge { font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600; background: #ddd; color: #666; flex-shrink: 0; }
+  .badge.on { background: #1a7bbf; color: white; }
+
+  .shop-fields { display: none; padding: 12px 12px 16px; background: #f5faff; border-top: 1px solid #b0d8f0; }
+  .shop-card.on .shop-fields { display: block; }
+
+  .warning { background: #fff8e1; border: 1px solid #ffe082; border-radius: 3px; padding: 8px 10px; font-size: 11px; color: #795548; margin-bottom: 12px; display: flex; gap: 6px; }
+
+  .fields-grid { display: grid; gap: 10px; }
+  .fields-grid.col2 { grid-template-columns: 1fr 1fr; }
+  .fields-grid.col3 { grid-template-columns: 1fr 1fr 1fr; }
+  .field-group { display: flex; flex-direction: column; }
+  .field-group label { font-size: 11px; color: #555; margin-bottom: 4px; font-weight: 500; }
+  .field-group input, .field-group select { padding: 5px 8px; border: 1px solid #ccc; border-radius: 2px; font-size: 12px; color: #333; }
+  .field-group input:focus, .field-group select:focus { outline: none; border-color: #1a7bbf; }
+
+  /* OTRAS INTEGRACIONES */
+  .section-divider { margin-top: 20px; padding-top: 16px; border-top: 2px solid #eee; }
+  .section-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 8px; }
+
+  .btn-save { background: #2ecc71; color: white; border: none; padding: 9px 24px; font-size: 12px; font-weight: 600; border-radius: 2px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 20px; }
+  .btn-save:hover { background: #27ae60; }
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <div class="brand">YOUR <span>COMPANY</span></div>
+  <div class="nav-items">
+    <div class="nav-item">CONFIGURACIÓN ▾</div>
+    <div class="nav-item">VENTAS ▾</div>
+    <div class="nav-item">COMPRAS ▾</div>
+    <div class="nav-item">STOCK ▾</div>
+    <div class="nav-item">PRODUCCIÓN ▾</div>
+    <div class="nav-item">RRHH ▾</div>
+    <div class="nav-item">FINANZAS ▾</div>
+    <div class="nav-item">CONTABILIDAD ▾</div>
+  </div>
+  <span style="color:#ccc;font-size:12px">🔍 Buscar en BIMS</span>
+</div>
+
+<div class="secondary-bar">
+  <div class="icon-btn">🏠</div>
+  <div class="icon-btn">↻</div>
+  <div class="icon-btn">+</div>
+  <div class="breadcrumb">EMPRESAS › <strong>YOUR COMPANY</strong></div>
+</div>
+
+<div class="layout">
+  <div class="sidebar">
+    <a href="#">Ver</a>
+    <a href="#" class="active">Editar</a>
+    <a href="#">Puntajes de Riesgo</a>
+    <a href="#">Financiero de Deudores</a>
+    <a href="#" class="danger">Eliminar</a>
+  </div>
+
+  <div class="main">
+    <div class="page-title">Editar Empresa</div>
+    <div class="content-grid">
+
+      <div class="accordion">
+        <div class="acc-item"><div class="acc-header"><div><div class="acc-title">Información Principal</div><div class="acc-sub">Configure aquí la información principal del elemento.</div></div><span style="color:#aaa">›</span></div></div>
+        <div class="acc-item"><div class="acc-header"><div><div class="acc-title">Información de Contacto</div></div><span style="color:#aaa">›</span></div></div>
+        <div class="acc-item"><div class="acc-header"><div><div class="acc-title">Información Fiscal</div></div><span style="color:#aaa">›</span></div></div>
+        <div class="acc-item"><div class="acc-header"><div><div class="acc-title">Tipo de Comprobante de Venta</div></div><span style="color:#aaa">›</span></div></div>
+        <div class="acc-item"><div class="acc-header"><div><div class="acc-title">Información Jurídica</div></div><span style="color:#aaa">›</span></div></div>
+        <div class="acc-item"><div class="acc-header"><div><div class="acc-title">Información Avanzada</div></div><span style="color:#aaa">›</span></div></div>
+        <div class="acc-item"><div class="acc-header active"><div><div class="acc-title">Integración a Servicios WEB</div><div class="acc-sub">Integración a Servicios WEB</div></div><span style="color:#aaa">›</span></div></div>
+        <div class="acc-item"><div class="acc-header"><div><div class="acc-title">Integración con Dispatchtrack</div><div class="acc-sub">Conexión vía API con la plataforma Dispatchtrack.</div></div><span style="color:#aaa">›</span></div></div>
+        <div class="acc-item"><div class="acc-header"><div><div class="acc-title">Fechas de Cierre</div></div><span style="color:#aaa">›</span></div></div>
+        <div class="acc-item"><div class="acc-header"><div><div class="acc-title">Ventas y Caja</div></div><span style="color:#aaa">›</span></div></div>
+        <div class="acc-item"><div class="acc-header"><div><div class="acc-title">Facturación Electrónica</div></div><span style="color:#aaa">›</span></div></div>
+        <div class="acc-item"><div class="acc-header"><div><div class="acc-title">Producción</div></div><span style="color:#aaa">›</span></div></div>
+        <div class="acc-item"><div class="acc-header"><div><div class="acc-title">Plantilla de Correo</div></div><span style="color:#aaa">›</span></div></div>
+        <div class="acc-item"><div class="acc-header"><div><div class="acc-title">Compras</div></div><span style="color:#aaa">›</span></div></div>
+        <div class="acc-item"><div class="acc-header"><div><div class="acc-title">Pagos</div></div><span style="color:#aaa">›</span></div></div>
+        <div class="acc-item"><div class="acc-header"><div><div class="acc-title">Productos y Stock</div></div><span style="color:#aaa">›</span></div></div>
+      </div>
+
+      <div class="panel">
+        <div class="heritage">
+          <div class="heritage-dot"></div>
+          Configuración a nivel <strong style="margin:0 3px">Empresa</strong>. Los Puntos de Venta usan esta configuración salvo que tengan una propia.
+        </div>
+
+        <div class="panel-title">Integración a Servicios WEB — Shoppings</div>
+
+        <!-- PENTA -->
+        <div class="shop-card" id="card-penta">
+          <div class="shop-toggle" onclick="toggle('penta')">
+            <input type="checkbox" id="cb-penta" onclick="event.stopPropagation();toggle('penta')">
+            <label for="cb-penta">Enviar Venta/NC a los Servicios WEB de <strong>Penta S.A.</strong> automáticamente</label>
+            <span class="badge" id="badge-penta">Inactivo</span>
+          </div>
+          <div class="shop-fields">
+            <div class="fields-grid col2">
+              <div class="field-group"><label>Token</label><input type="text" placeholder="Token de autenticación"></div>
+              <div class="field-group"><label>Contrato</label><input type="text" placeholder="Nro. de contrato"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SAN LORENZO -->
+        <div class="shop-card" id="card-sanlorenzo">
+          <div class="shop-toggle" onclick="toggle('sanlorenzo')">
+            <input type="checkbox" id="cb-sanlorenzo" onclick="event.stopPropagation();toggle('sanlorenzo')">
+            <label for="cb-sanlorenzo">Enviar Venta a los Servicios WEB de <strong>Shopping San Lorenzo</strong> automáticamente</label>
+            <span class="badge" id="badge-sanlorenzo">Inactivo</span>
+          </div>
+          <div class="shop-fields">
+            <div class="fields-grid col2">
+              <div class="field-group"><label>Token</label><input type="text" placeholder="Token de autenticación"></div>
+              <div class="field-group"><label>Contrato</label><input type="text" placeholder="Nro. de contrato"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COSTANERA -->
+        <div class="shop-card" id="card-costanera">
+          <div class="shop-toggle" onclick="toggle('costanera')">
+            <input type="checkbox" id="cb-costanera" onclick="event.stopPropagation();toggle('costanera')">
+            <label for="cb-costanera">Enviar Venta a los Servicios WEB de <strong>Shopping Costanera</strong> automáticamente</label>
+            <span class="badge" id="badge-costanera">Inactivo</span>
+          </div>
+          <div class="shop-fields">
+            <div class="fields-grid col3">
+              <div class="field-group"><label>Token</label><input type="text" placeholder="Token"></div>
+              <div class="field-group"><label>Api Key</label><input type="text" placeholder="Api Key"></div>
+              <div class="field-group"><label>Contrato</label><input type="text" placeholder="Contrato"></div>
+            </div>
+            <div class="fields-grid col2" style="margin-top:10px">
+              <div class="field-group"><label>Host</label><input type="text" placeholder="URL del host"></div>
+              <div class="field-group"><label>Tenant</label><input type="text" placeholder="Tenant ID"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DEL SOL -->
+        <div class="shop-card" id="card-delsol">
+          <div class="shop-toggle" onclick="toggle('delsol')">
+            <input type="checkbox" id="cb-delsol" onclick="event.stopPropagation();toggle('delsol')">
+            <label for="cb-delsol">Enviar Venta a los Servicios WEB de <strong>Shopping Del Sol</strong> automáticamente</label>
+            <span class="badge" id="badge-delsol">Inactivo</span>
+          </div>
+          <div class="shop-fields">
+            <div class="warning">
+              <span>⚠️</span>
+              <span><strong>Atención:</strong> Al activar esta integración, se bloqueará la edición de comprobantes emitidos (autoimpresores y preimpresos). Para correcciones usá notas de crédito o anulaciones.</span>
+            </div>
+            <div class="fields-grid col2">
+              <div class="field-group"><label>Token</label><input type="text" placeholder="Token de autenticación"></div>
+              <div class="field-group"><label>Contrato</label><input type="text" placeholder="Nro. de contrato"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- OTRAS INTEGRACIONES -->
+        <div class="section-divider">
+          <div class="section-label">Otras integraciones</div>
+          <div class="shop-card" id="card-airelibre">
+            <div class="shop-toggle" onclick="toggle('airelibre')">
+              <input type="checkbox" id="cb-airelibre" onclick="event.stopPropagation();toggle('airelibre')">
+              <label for="cb-airelibre"><strong>Habilitar Venta Aire Libre</strong></label>
+              <span class="badge" id="badge-airelibre">Inactivo</span>
+            </div>
+            <div class="shop-fields">
+              <div class="fields-grid col3">
+                <div class="field-group"><label>Usuario</label><input type="text" placeholder="Usuario"></div>
+                <div class="field-group"><label>Contraseña</label><input type="password" placeholder="Contraseña"></div>
+                <div class="field-group"><label>Tasa IVA</label><select><option>- Exento -</option><option>5%</option><option>10%</option></select></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-save">Guardar Cambios</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function toggle(id) {
+  var card = document.getElementById('card-' + id);
+  var cb = document.getElementById('cb-' + id);
+  var badge = document.getElementById('badge-' + id);
+  var isOn = !cb.checked;
+  cb.checked = isOn;
+  if (isOn) {
+    card.classList.add('on');
+    badge.textContent = 'Activo';
+    badge.classList.add('on');
+  } else {
+    card.classList.remove('on');
+    badge.textContent = 'Inactivo';
+    badge.classList.remove('on');
+  }
+}
+</script>
+</body>
+</html>
