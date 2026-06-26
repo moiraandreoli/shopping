@@ -142,8 +142,8 @@
 
         <!-- PENTA -->
         <div class="shop-card" id="card-penta">
-          <div class="shop-toggle" onclick="toggle('penta')">
-            <input type="checkbox" id="cb-penta" onclick="event.stopPropagation();toggle('penta')">
+          <div class="shop-toggle" onclick="toggle(event, 'penta')">
+            <input type="checkbox" id="cb-penta">
             <label for="cb-penta">Enviar Venta/NC a los Servicios WEB de <strong>Penta S.A.</strong> automáticamente</label>
             <span class="badge" id="badge-penta">Inactivo</span>
           </div>
@@ -157,8 +157,8 @@
 
         <!-- SAN LORENZO -->
         <div class="shop-card" id="card-sanlorenzo">
-          <div class="shop-toggle" onclick="toggle('sanlorenzo')">
-            <input type="checkbox" id="cb-sanlorenzo" onclick="event.stopPropagation();toggle('sanlorenzo')">
+          <div class="shop-toggle" onclick="toggle(event, 'sanlorenzo')">
+            <input type="checkbox" id="cb-sanlorenzo">
             <label for="cb-sanlorenzo">Enviar Venta a los Servicios WEB de <strong>Shopping San Lorenzo</strong> automáticamente</label>
             <span class="badge" id="badge-sanlorenzo">Inactivo</span>
           </div>
@@ -172,8 +172,8 @@
 
         <!-- COSTANERA -->
         <div class="shop-card" id="card-costanera">
-          <div class="shop-toggle" onclick="toggle('costanera')">
-            <input type="checkbox" id="cb-costanera" onclick="event.stopPropagation();toggle('costanera')">
+          <div class="shop-toggle" onclick="toggle(event, 'costanera')">
+            <input type="checkbox" id="cb-costanera">
             <label for="cb-costanera">Enviar Venta a los Servicios WEB de <strong>Shopping Costanera</strong> automáticamente</label>
             <span class="badge" id="badge-costanera">Inactivo</span>
           </div>
@@ -192,8 +192,8 @@
 
         <!-- DEL SOL -->
         <div class="shop-card" id="card-delsol">
-          <div class="shop-toggle" onclick="toggle('delsol')">
-            <input type="checkbox" id="cb-delsol" onclick="event.stopPropagation();toggle('delsol')">
+          <div class="shop-toggle" onclick="toggle(event, 'delsol')">
+            <input type="checkbox" id="cb-delsol">
             <label for="cb-delsol">Enviar Venta a los Servicios WEB de <strong>Shopping Del Sol</strong> automáticamente</label>
             <span class="badge" id="badge-delsol">Inactivo</span>
           </div>
@@ -209,26 +209,7 @@
           </div>
         </div>
 
-        <!-- OTRAS INTEGRACIONES -->
-        <div class="section-divider">
-          <div class="section-label">Otras integraciones</div>
-          <div class="shop-card" id="card-airelibre">
-            <div class="shop-toggle" onclick="toggle('airelibre')">
-              <input type="checkbox" id="cb-airelibre" onclick="event.stopPropagation();toggle('airelibre')">
-              <label for="cb-airelibre"><strong>Habilitar Venta Aire Libre</strong></label>
-              <span class="badge" id="badge-airelibre">Inactivo</span>
-            </div>
-            <div class="shop-fields">
-              <div class="fields-grid col3">
-                <div class="field-group"><label>Usuario</label><input type="text" placeholder="Usuario"></div>
-                <div class="field-group"><label>Contraseña</label><input type="password" placeholder="Contraseña"></div>
-                <div class="field-group"><label>Tasa IVA</label><select><option>- Exento -</option><option>5%</option><option>10%</option></select></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <button class="btn-save">Guardar Cambios</button>
+<button class="btn-save">Guardar Cambios</button>
       </div>
 
     </div>
@@ -236,12 +217,14 @@
 </div>
 
 <script>
-function toggle(id) {
+function toggle(event, id) {
   var card = document.getElementById('card-' + id);
   var cb = document.getElementById('cb-' + id);
   var badge = document.getElementById('badge-' + id);
-  var isOn = !cb.checked;
-  cb.checked = isOn;
+  if (event.target !== cb) {
+    cb.checked = !cb.checked;
+  }
+  var isOn = cb.checked;
   if (isOn) {
     card.classList.add('on');
     badge.textContent = 'Activo';

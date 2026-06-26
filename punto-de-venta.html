@@ -27,6 +27,7 @@
   .page-title { font-size: 18px; font-weight: 400; margin-bottom: 16px; }
   .content-grid { display: grid; grid-template-columns: 390px 1fr; gap: 16px; align-items: start; }
 
+  /* ACCORDION */
   .accordion { background: white; border: 1px solid #ddd; border-radius: 2px; }
   .acc-item { border-bottom: 1px solid #eee; }
   .acc-item:last-child { border-bottom: none; }
@@ -36,53 +37,40 @@
   .acc-title { font-size: 13px; color: #1a7bbf; font-weight: 500; }
   .acc-sub { font-size: 11px; color: #888; margin-top: 1px; }
 
+  /* PANEL */
   .panel { background: white; border: 1px solid #ddd; border-radius: 2px; padding: 20px; }
-  .panel-title { font-size: 13px; font-weight: 600; color: #333; margin-bottom: 6px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
-  .panel-sub { font-size: 11px; color: #888; margin-bottom: 16px; }
+  .panel-title { font-size: 13px; font-weight: 600; color: #333; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
+  .heritage { background: white; border: 1px solid #e0e0e0; border-radius: 3px; padding: 8px 12px; margin-bottom: 16px; font-size: 11px; color: #666; display: flex; align-items: center; gap: 6px; }
+  .heritage-dot { width: 6px; height: 6px; border-radius: 50%; background: #1a7bbf; flex-shrink: 0; }
 
   /* SHOPPING CARDS */
-  .shop-card { border: 1px solid #e5e5e5; border-radius: 3px; margin-bottom: 8px; overflow: hidden; }
-  .shop-header { display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #f9f9f9; cursor: pointer; user-select: none; }
-  .shop-header:hover { background: #f0f0f0; }
-  .shop-expand { font-size: 11px; color: #999; width: 14px; flex-shrink: 0; }
-  .shop-name { font-size: 12px; color: #333; flex: 1; }
+  .shop-card { border: 1px solid #e5e5e5; border-radius: 3px; margin-bottom: 8px; overflow: hidden; transition: border-color 0.15s; }
+  .shop-card.on { border-color: #90caf9; }
+  .shop-toggle { display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #f9f9f9; cursor: pointer; user-select: none; transition: background 0.15s; }
+  .shop-toggle:hover { background: #f0f0f0; }
+  .shop-card.on .shop-toggle { background: #eaf4fb; }
+  .shop-toggle input[type=checkbox] { width: 14px; height: 14px; cursor: pointer; accent-color: #1a7bbf; flex-shrink: 0; }
+  .shop-toggle label { font-size: 12px; color: #333; cursor: pointer; flex: 1; }
+  .badge { font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600; background: #ddd; color: #666; flex-shrink: 0; }
+  .badge.on { background: #1a7bbf; color: white; }
 
-  /* STATUS PILL */
-  .pill { font-size: 10px; padding: 3px 8px; border-radius: 10px; font-weight: 600; display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
-  .pill-dot { width: 6px; height: 6px; border-radius: 50%; }
-  .pill-none { background: #f5f5f5; color: #999; border: 1px solid #ddd; }
-  .pill-none .pill-dot { background: #bbb; }
-  .pill-empresa { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
-  .pill-empresa .pill-dot { background: #2e7d32; }
-  .pill-pdv { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
-  .pill-pdv .pill-dot { background: #1565c0; }
+  .shop-fields { display: none; padding: 12px 12px 16px; background: #f5faff; border-top: 1px solid #b0d8f0; }
+  .shop-card.on .shop-fields { display: block; }
 
-  /* FIELDS PANEL */
-  .shop-body { display: none; border-top: 1px solid #eee; }
-  .shop-card.open .shop-body { display: block; }
+  /* EMPRESA CONFIG (solo lectura dentro del PdV) */
+  .empresa-config { background: #f0f4f8; border: 1px solid #d0dce8; border-radius: 2px; padding: 8px 10px; margin-bottom: 12px; }
+  .empresa-config-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 6px; }
 
-  .shop-section { padding: 10px 12px 14px; }
-  .shop-section + .shop-section { border-top: 1px solid #eee; }
-  .section-title { font-size: 11px; font-weight: 600; color: #999; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; }
-  .section-title.active-label { color: #333; }
-  .active-tag { font-size: 10px; color: #1565c0; font-weight: 400; }
+  .warning { background: #fff8e1; border: 1px solid #ffe082; border-radius: 3px; padding: 8px 10px; font-size: 11px; color: #795548; margin-bottom: 12px; display: flex; gap: 6px; }
 
-  .fields-grid { display: grid; gap: 8px; }
-  .col2 { grid-template-columns: 1fr 1fr; }
-  .col3 { grid-template-columns: 1fr 1fr 1fr; }
+  .fields-grid { display: grid; gap: 10px; }
+  .fields-grid.col2 { grid-template-columns: 1fr 1fr; }
+  .fields-grid.col3 { grid-template-columns: 1fr 1fr 1fr; }
   .field-group { display: flex; flex-direction: column; }
-  .field-group label { font-size: 11px; color: #555; margin-bottom: 3px; font-weight: 500; }
-  .field-group input { padding: 5px 8px; border: 1px solid #ccc; border-radius: 2px; font-size: 12px; color: #333; }
-  .field-group input:focus { outline: none; border-color: #1a7bbf; }
+  .field-group label { font-size: 11px; color: #555; margin-bottom: 4px; font-weight: 500; }
+  .field-group input, .field-group select { padding: 5px 8px; border: 1px solid #ccc; border-radius: 2px; font-size: 12px; color: #333; }
+  .field-group input:focus, .field-group select:focus { outline: none; border-color: #1a7bbf; }
   .field-group input.disabled { background: #f5f5f5; color: #999; border-color: #e0e0e0; }
-
-  .no-config { font-size: 11px; color: #bbb; padding: 2px 0 6px; }
-
-  .pdv-toggle { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
-  .pdv-toggle input[type=checkbox] { width: 14px; height: 14px; cursor: pointer; accent-color: #1a7bbf; }
-  .pdv-toggle label { font-size: 12px; color: #333; cursor: pointer; }
-
-  .warning { background: #fff8e1; border: 1px solid #ffe082; border-radius: 3px; padding: 8px 10px; font-size: 11px; color: #795548; margin-bottom: 10px; display: flex; gap: 6px; }
 
   .btn-save { background: #2ecc71; color: white; border: none; padding: 9px 24px; font-size: 12px; font-weight: 600; border-radius: 2px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 20px; }
   .btn-save:hover { background: #27ae60; }
@@ -141,131 +129,78 @@
       </div>
 
       <div class="panel">
+        <div class="heritage">
+          <div class="heritage-dot"></div>
+          Si completás la configuración aquí, este <strong style="margin:0 3px">Punto de Venta</strong> la va a usar. Si no, se usa la configuración de Empresa.
+        </div>
+
         <div class="panel-title">Integración a Servicios WEB — Shoppings</div>
-        <div class="panel-sub">Si completás la configuración acá, este Punto de Venta la va a usar. Si no, se usa la de Empresa.</div>
 
         <!-- PENTA — tiene config de Empresa -->
         <div class="shop-card" id="card-penta">
-          <div class="shop-header" onclick="toggleCard('penta')">
-            <span class="shop-expand" id="arrow-penta">›</span>
-            <span class="shop-name">Enviar Venta/NC a los Servicios WEB de <strong>Penta S.A.</strong></span>
-            <span class="pill pill-empresa" id="pill-penta"><span class="pill-dot"></span><span id="pill-text-penta">Usando config de Empresa</span></span>
+          <div class="shop-toggle" onclick="toggle(event, 'penta')">
+            <input type="checkbox" id="cb-penta">
+            <label for="cb-penta">Enviar Venta/NC a los Servicios WEB de <strong>Penta S.A.</strong> automáticamente</label>
+            <span class="badge" id="badge-penta">Inactivo</span>
           </div>
-          <div class="shop-body" id="body-penta">
-            <!-- Empresa -->
-            <div class="shop-section">
-              <div class="section-title" id="label-empresa-penta">Empresa</div>
-              <div class="fields-grid col2">
-                <div class="field-group"><label>Token</label><input class="disabled" value="tok_empresa_****" readonly></div>
-                <div class="field-group"><label>Contrato</label><input class="disabled" value="CONT-00234" readonly></div>
-              </div>
-            </div>
-            <!-- PdV -->
-            <div class="shop-section">
-              <div class="section-title" id="label-pdv-penta">Este Punto de Venta — sobreescribe Empresa si completás</div>
-              <div class="pdv-toggle">
-                <input type="checkbox" id="cb-penta" onchange="togglePdv('penta', false)">
-                <label for="cb-penta">Configurar para este Punto de Venta</label>
-              </div>
-              <div id="fields-penta" style="display:none">
-                <div class="fields-grid col2">
-                  <div class="field-group"><label>Token</label><input type="text" placeholder="Token de autenticación"></div>
-                  <div class="field-group"><label>Contrato</label><input type="text" placeholder="Nro. de contrato"></div>
-                </div>
-              </div>
+          <div class="shop-fields">
+            <div class="fields-grid col2">
+              <div class="field-group"><label>Token</label><input type="text" placeholder="Token de autenticación"></div>
+              <div class="field-group"><label>Contrato</label><input type="text" placeholder="Nro. de contrato"></div>
             </div>
           </div>
         </div>
 
         <!-- SAN LORENZO — sin config de Empresa -->
         <div class="shop-card" id="card-sanlorenzo">
-          <div class="shop-header" onclick="toggleCard('sanlorenzo')">
-            <span class="shop-expand" id="arrow-sanlorenzo">›</span>
-            <span class="shop-name">Enviar Venta a los Servicios WEB de <strong>Shopping San Lorenzo</strong></span>
-            <span class="pill pill-none" id="pill-sanlorenzo"><span class="pill-dot"></span><span id="pill-text-sanlorenzo">Sin configurar</span></span>
+          <div class="shop-toggle" onclick="toggle(event, 'sanlorenzo')">
+            <input type="checkbox" id="cb-sanlorenzo">
+            <label for="cb-sanlorenzo">Enviar Venta a los Servicios WEB de <strong>Shopping San Lorenzo</strong> automáticamente</label>
+            <span class="badge" id="badge-sanlorenzo">Inactivo</span>
           </div>
-          <div class="shop-body" id="body-sanlorenzo">
-            <div class="shop-section">
-              <div class="section-title">Empresa</div>
-              <div class="no-config">No hay configuración de Empresa para este shopping.</div>
-            </div>
-            <div class="shop-section">
-              <div class="section-title" id="label-pdv-sanlorenzo">Este Punto de Venta</div>
-              <div class="pdv-toggle">
-                <input type="checkbox" id="cb-sanlorenzo" onchange="togglePdv('sanlorenzo', false)">
-                <label for="cb-sanlorenzo">Configurar para este Punto de Venta</label>
-              </div>
-              <div id="fields-sanlorenzo" style="display:none">
-                <div class="fields-grid col2">
-                  <div class="field-group"><label>Token</label><input type="text" placeholder="Token de autenticación"></div>
-                  <div class="field-group"><label>Contrato</label><input type="text" placeholder="Nro. de contrato"></div>
-                </div>
-              </div>
+          <div class="shop-fields">
+            <div class="fields-grid col2">
+              <div class="field-group"><label>Token</label><input type="text" placeholder="Token de autenticación"></div>
+              <div class="field-group"><label>Contrato</label><input type="text" placeholder="Nro. de contrato"></div>
             </div>
           </div>
         </div>
 
         <!-- COSTANERA — sin config de Empresa -->
         <div class="shop-card" id="card-costanera">
-          <div class="shop-header" onclick="toggleCard('costanera')">
-            <span class="shop-expand" id="arrow-costanera">›</span>
-            <span class="shop-name">Enviar Venta a los Servicios WEB de <strong>Shopping Costanera</strong></span>
-            <span class="pill pill-none" id="pill-costanera"><span class="pill-dot"></span><span id="pill-text-costanera">Sin configurar</span></span>
+          <div class="shop-toggle" onclick="toggle(event, 'costanera')">
+            <input type="checkbox" id="cb-costanera">
+            <label for="cb-costanera">Enviar Venta a los Servicios WEB de <strong>Shopping Costanera</strong> automáticamente</label>
+            <span class="badge" id="badge-costanera">Inactivo</span>
           </div>
-          <div class="shop-body" id="body-costanera">
-            <div class="shop-section">
-              <div class="section-title">Empresa</div>
-              <div class="no-config">No hay configuración de Empresa para este shopping.</div>
+          <div class="shop-fields">
+            <div class="fields-grid col3">
+              <div class="field-group"><label>Token</label><input type="text" placeholder="Token"></div>
+              <div class="field-group"><label>Api Key</label><input type="text" placeholder="Api Key"></div>
+              <div class="field-group"><label>Contrato</label><input type="text" placeholder="Contrato"></div>
             </div>
-            <div class="shop-section">
-              <div class="section-title" id="label-pdv-costanera">Este Punto de Venta</div>
-              <div class="pdv-toggle">
-                <input type="checkbox" id="cb-costanera" onchange="togglePdv('costanera', false)">
-                <label for="cb-costanera">Configurar para este Punto de Venta</label>
-              </div>
-              <div id="fields-costanera" style="display:none">
-                <div class="fields-grid col3">
-                  <div class="field-group"><label>Token</label><input type="text" placeholder="Token"></div>
-                  <div class="field-group"><label>Api Key</label><input type="text" placeholder="Api Key"></div>
-                  <div class="field-group"><label>Contrato</label><input type="text" placeholder="Contrato"></div>
-                </div>
-                <div class="fields-grid col2" style="margin-top:8px">
-                  <div class="field-group"><label>Host</label><input type="text" placeholder="URL del host"></div>
-                  <div class="field-group"><label>Tenant</label><input type="text" placeholder="Tenant ID"></div>
-                </div>
-              </div>
+            <div class="fields-grid col2" style="margin-top:10px">
+              <div class="field-group"><label>Host</label><input type="text" placeholder="URL del host"></div>
+              <div class="field-group"><label>Tenant</label><input type="text" placeholder="Tenant ID"></div>
             </div>
           </div>
         </div>
 
         <!-- DEL SOL — sin config de Empresa -->
         <div class="shop-card" id="card-delsol">
-          <div class="shop-header" onclick="toggleCard('delsol')">
-            <span class="shop-expand" id="arrow-delsol">›</span>
-            <span class="shop-name">Enviar Venta a los Servicios WEB de <strong>Shopping Del Sol</strong></span>
-            <span class="pill pill-none" id="pill-delsol"><span class="pill-dot"></span><span id="pill-text-delsol">Sin configurar</span></span>
+          <div class="shop-toggle" onclick="toggle(event, 'delsol')">
+            <input type="checkbox" id="cb-delsol">
+            <label for="cb-delsol">Enviar Venta a los Servicios WEB de <strong>Shopping Del Sol</strong> automáticamente</label>
+            <span class="badge" id="badge-delsol">Inactivo</span>
           </div>
-          <div class="shop-body" id="body-delsol">
-            <div class="shop-section">
-              <div class="section-title">Empresa</div>
-              <div class="no-config">No hay configuración de Empresa para este shopping.</div>
+          <div class="shop-fields">
+            <div class="warning">
+              <span>⚠️</span>
+              <span><strong>Atención:</strong> Al activar esta integración, se bloqueará la edición de comprobantes emitidos (autoimpresores y preimpresos) en este Punto de Venta. Para correcciones usá notas de crédito o anulaciones.</span>
             </div>
-            <div class="shop-section">
-              <div class="section-title" id="label-pdv-delsol">Este Punto de Venta</div>
-              <div class="pdv-toggle">
-                <input type="checkbox" id="cb-delsol" onchange="togglePdv('delsol', true)">
-                <label for="cb-delsol">Configurar para este Punto de Venta</label>
-              </div>
-              <div id="fields-delsol" style="display:none">
-                <div class="warning">
-                  <span>⚠️</span>
-                  <span><strong>Atención:</strong> Al activar esta integración, se bloqueará la edición de comprobantes emitidos (autoimpresores y preimpresos) en este Punto de Venta. Para correcciones usá notas de crédito o anulaciones.</span>
-                </div>
-                <div class="fields-grid col2">
-                  <div class="field-group"><label>Token</label><input type="text" placeholder="Token de autenticación"></div>
-                  <div class="field-group"><label>Contrato</label><input type="text" placeholder="Nro. de contrato"></div>
-                </div>
-              </div>
+            <div class="fields-grid col2">
+              <div class="field-group"><label>Token</label><input type="text" placeholder="Token de autenticación"></div>
+              <div class="field-group"><label>Contrato</label><input type="text" placeholder="Nro. de contrato"></div>
             </div>
           </div>
         </div>
@@ -278,47 +213,24 @@
 </div>
 
 <script>
-  // Empresa config (simulado)
-  var empresaConfig = { penta: true, sanlorenzo: false, costanera: false, delsol: false };
-
-  function toggleCard(id) {
-    var card = document.getElementById('card-' + id);
-    var arrow = document.getElementById('arrow-' + id);
-    var body = document.getElementById('body-' + id);
-    var isOpen = card.classList.contains('open');
-    card.classList.toggle('open');
-    body.style.display = isOpen ? 'none' : 'block';
-    arrow.textContent = isOpen ? '›' : '▾';
+function toggle(event, id) {
+  var card = document.getElementById('card-' + id);
+  var cb = document.getElementById('cb-' + id);
+  var badge = document.getElementById('badge-' + id);
+  if (event.target !== cb) {
+    cb.checked = !cb.checked;
   }
-
-  function togglePdv(id, hasWarning) {
-    var cb = document.getElementById('cb-' + id);
-    var fields = document.getElementById('fields-' + id);
-    var pill = document.getElementById('pill-' + id);
-    var pillText = document.getElementById('pill-text-' + id);
-    var labelPdv = document.getElementById('label-pdv-' + id);
-
-    fields.style.display = cb.checked ? 'block' : 'none';
-
-    if (cb.checked) {
-      // PdV activo → pill azul
-      pill.className = 'pill pill-pdv';
-      pillText.textContent = 'Usando config de este PdV';
-      labelPdv.textContent = '✅ Este Punto de Venta — configuración activa';
-      labelPdv.classList.add('active-label');
-    } else {
-      // Sin PdV → volver a Empresa o Sin configurar
-      if (empresaConfig[id]) {
-        pill.className = 'pill pill-empresa';
-        pillText.textContent = 'Usando config de Empresa';
-      } else {
-        pill.className = 'pill pill-none';
-        pillText.textContent = 'Sin configurar';
-      }
-      labelPdv.textContent = 'Este Punto de Venta — sobreescribe Empresa si completás';
-      labelPdv.classList.remove('active-label');
-    }
+  var isOn = cb.checked;
+  if (isOn) {
+    card.classList.add('on');
+    badge.textContent = 'Activo';
+    badge.classList.add('on');
+  } else {
+    card.classList.remove('on');
+    badge.textContent = 'Inactivo';
+    badge.classList.remove('on');
   }
+}
 </script>
 </body>
 </html>
